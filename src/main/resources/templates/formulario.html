@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Estado de Cuenta - Banco Bandido de Peluche</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            color: #333;
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        form input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin: 6px 0 12px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        form label {
+            font-weight: bold;
+        }
+
+        form button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        table th {
+            background-color: #f2f2f2;
+        }
+
+        h3 {
+            text-align: right;
+            margin-top: 30px;
+        }
+
+        .download-btn {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .download-btn button {
+            background-color: #007BFF;
+            padding: 10px 20px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>Estado de Cuenta - Banco Bandido de Peluche</h1>
+
+<form action="/agregar" method="post" th:object="${cliente}">
+    <label>Saldo Anterior:</label>
+    <input type="number" th:field="*{saldoAnterior}" required>
+
+    <label>Monto de Compras:</label>
+    <input type="number" th:field="*{montoCompras}" required>
+
+    <label>Pago Realizado en el Corte Anterior:</label>
+    <input type="number" th:field="*{pagoAnterior}" required>
+
+    <br><br>
+    <button type="submit">Calcular Estado de Cuenta</button>
+</form>
+
+<h2>Clientes y su Estado de Cuenta</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Cliente</th>
+        <th>Saldo Actual</th>
+        <th>Pago Mínimo</th>
+        <th>Pago para No Generar Intereses</th>
+        <th>Intereses Generados</th>
+        <th>Multa por Morosidad</th>
+        <th>Total Ganado por Morosidad</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="cliente : ${clientes}">
+        <td th:text="${cliente.nombreCliente}">Nombre Cliente</td>
+        <td th:text="${cliente.saldoActual}">0.00</td>
+        <td th:text="${cliente.pagoMinimo}">0.00</td>
+        <td th:text="${cliente.pagoParaNoGenerarIntereses}">0.00</td>
+        <td th:text="${cliente.interesesGenerados}">0.00</td>
+        <td th:text="${cliente.multa}">0.00</td>
+        <td th:text="${cliente.totalGanadoPorMorosidad}">0.00</td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Total Ganado por Morosidad: <span th:text="${gananciaMorosidad}">0.00</span></h3>
+
+
+</body>
+</html>
