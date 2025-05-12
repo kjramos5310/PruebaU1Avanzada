@@ -25,8 +25,11 @@ public class FacturaControlador {
     public String mostrarFormulario(Model model) {
         model.addAttribute("cliente", new BancoModel());
         model.addAttribute("clientes", BancoItems);
-        model.addAttribute("gananciaMorosidad", BancoItems.stream()
-                .mapToDouble(BancoModel::getTotalGanadoPorMorosidad).sum());
+       double gananciaMorosidad = 0;
+        for (int i = 0; i < BancoItems.size(); i++) {
+            gananciaMorosidad = gananciaMorosidad + BancoItems.get(i).getTotalGanadoPorMorosidad();
+        }
+        model.addAttribute("gananciaMorosidad", gananciaMorosidad);
         return "formulario";
     }
 
